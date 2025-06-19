@@ -1,0 +1,74 @@
+﻿@model List<TheCoffeeShop.Models.DonHang>
+@{
+    ViewData["Title"] = "Lịch sử đơn hàng";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card p-4" style="background-color: #f9f6f1; border-radius: 10px;">
+            <h2 class="mb-4 text-center" style="color: #6b4e31;">Lịch sử đơn hàng</h2>
+
+            @if (Model.Any())
+            {
+                foreach (var order in Model)
+                {
+                    <div class="card mb-4" style="border: 1px solid #e0d5c5; border-radius: 10px;">
+                        <div class="card-header" style="background-color: #6b4e31; color: white; border-radius: 10px 10px 0 0;">
+                            <strong>Mã đơn hàng: @order.MaDonHang</strong>
+                        </div>
+                        <div class="card-body p-3" style="background-color: white;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p style="color: #6b4e31;"><strong>Thời gian tạo:</strong> @order.ThoiGianTao.ToString("dd/MM/yyyy HH:mm")</p>
+                                    <p style="color: #6b4e31;"><strong>Thời gian cập nhật:</strong> @order.ThoiGianCapNhat.ToString("dd/MM/yyyy HH:mm")</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p style="color: #6b4e31;"><strong>Loại đơn hàng:</strong> @order.LoaiDonHang</p>
+                                    <p style="color: #6b4e31;"><strong>Trạng thái:</strong> @order.TrangThai</p>
+                                </div>
+                            </div>
+                            <p style="color: #8b4513;"><strong>Tổng tiền: @string.Format("{0:N0}", order.ChiTietDonHangs.Sum(c => c.ThanhTien ?? 0)) VNĐ</strong></p>
+
+                            @if (order.ChiTietDonHangs.Any())
+                            {
+                                <table class="table mt-3" style="border: 1px solid #e0d5c5;">
+                                    <thead style="background-color: #d2b48c;">
+                                        <tr>
+                                            <th style="color: #6b4e31;">Sản phẩm</th>
+                                            <th style="color: #6b4e31;">Số lượng</th>
+                                            <th style="color: #6b4e31;">Đơn giá</th>
+                                            <th style="color: #6b4e31;">Thành tiền</th>
+                                            <th style="color: #6b4e31;">Ghi chú</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in order.ChiTietDonHangs)
+                                        {
+                                            <tr>
+                                                <td>@item.MaSanPhamNavigation.TenSanPham</td>
+                                                <td>@item.SoLuong</td>
+                                                <td>@string.Format("{0:N0}", item.DonGia) VNĐ</td>
+                                                <td>@string.Format("{0:N0}", item.ThanhTien ?? 0) VNĐ</td>
+                                                <td>@(string.IsNullOrEmpty(item.GhiChu) ? "Không có" : item.GhiChu)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-center py-4" style="color: #6b4e31;">
+                    Bạn chưa có đơn hàng nào.
+                </div>
+            }
+
+            <div class="d-flex justify-content-start mt-4">
+                <a asp-controller="Home" asp-action="Index" class="btn" style="background-color: #6b4e31; color: white;">Trở về</a>
+            </div>
+        </div>
+    </div>
+</div>

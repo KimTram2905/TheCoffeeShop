@@ -1,0 +1,130 @@
+﻿@model TheCoffeeShop.Models.NguoiDung
+@{
+    ViewData["Title"] = "Thêm người dùng";
+}
+
+@if (User.IsInRole("Quản lý"))
+{
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h2 class="text-center mb-4">
+                    Thêm người dùng
+                </h2>
+
+                <form asp-action="AddUser" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="TenDangNhap" class="form-label">
+                            Tên đăng nhập
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-user me-2"></i>
+                            </span>
+                            <input asp-for="TenDangNhap" class="form-control border-start-0" placeholder="Nhập tên đăng nhập" />
+                        </div>
+                        <span asp-validation-for="TenDangNhap" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="MatKhau" class="form-label">
+                            Mật khẩu
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-lock me-2"></i>
+                            </span>
+                            <input asp-for="MatKhau" type="password" class="form-control border-start-0" placeholder="Nhập mật khẩu" />
+                        </div>
+                        <span asp-validation-for="MatKhau" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="HoTen" class="form-label">
+                            Họ và tên
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-id-card me-2"></i>
+                            </span>
+                            <input asp-for="HoTen" class="form-control border-start-0" placeholder="Nhập họ và tên" />
+                        </div>
+                        <span asp-validation-for="HoTen" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="SoDienThoai" class="form-label">
+                            Số điện thoại
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-phone me-2"></i>
+                            </span>
+                            <input asp-for="SoDienThoai" class="form-control border-start-0" placeholder="Nhập số điện thoại" />
+                        </div>
+                        <span asp-validation-for="SoDienThoai" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">
+                            Email
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-envelope me-2"></i>
+                            </span>
+                            <input asp-for="Email" class="form-control border-start-0" placeholder="Nhập email" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="DiaChi" class="form-label">
+                            Địa chỉ
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                            </span>
+                            <input asp-for="DiaChi" class="form-control border-start-0" placeholder="Nhập địa chỉ" />
+                        </div>
+                        <span asp-validation-for="DiaChi" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="VaiTro" class="form-label">
+                            Vai trò
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-user-tag me-2"></i>
+                            </span>
+                            <select asp-for="VaiTro" class="form-select border-start-0" required>
+                                <option value="" disabled selected>Chọn vai trò</option>
+                                @foreach (var role in ViewBag.Roles)
+                                {
+                                    <option value="@role">@role</option>
+                                }
+                            </select>
+                        </div>
+                        <span asp-validation-for="VaiTro" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="fas fa-user-plus me-2"></i>Thêm người dùng
+                        </button>
+                        <a asp-action="ManageUsers" class="btn btn-secondary px-4">
+                            <i class="fas fa-times me-2"></i>Hủy
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

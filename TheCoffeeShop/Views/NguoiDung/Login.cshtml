@@ -1,0 +1,59 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h2 class="text-center mb-4">
+               Đăng nhập
+            </h2>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle me-2"></i>@ViewBag.Error
+                </div>
+            }
+
+            <form asp-action="Login" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Tên đăng nhập hoặc Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text ">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <input type="text" name="tenDangNhap" class="form-control border-start-0" placeholder="Nhập tên đăng nhập hoặc email" required />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Mật khẩu</label>
+                    <div class="input-group">
+                        <span class="input-group-text ">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" name="matKhau" class="form-control border-start-0" placeholder="Nhập mật khẩu" required />
+                        
+                    </div>
+                </div>
+
+                <div class="mb-3 text-end">
+                    <a href="/NguoiDung/ForgotPassword">
+                        Quên mật khẩu?
+                    </a>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2">
+                    Đăng nhập
+                </button>
+
+                <div class="text-center mt-3">
+                    Bạn chưa có tài khoản?
+                    <a href="/NguoiDung/Register">Đăng ký ngay</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "The Coffee Shop - Thế giới cà phê nguyên bản";
+}
+
+<!-- Banner chào mừng - Phiên bản đơn giản -->
+<section class="welcome-banner mb-5">
+    <div class="container-fluid px-0">
+        <div class="jumbotron jumbotron-fluid bg-dark text-white position-relative">
+            <img src="~/images/home-banner.jpg"
+                 alt="Coffee Banner" class="img-fluid w-100" style="height: 400px; object-fit: cover; opacity: 0.7;">
+            <div class="position-absolute top-50 start-50 translate-middle text-center w-100 px-3">
+                <h1 class="display-4 fw-bold mb-3">Chào mừng đến với The Coffee Shop</h1>
+                <p class="lead mb-4">Nơi hương vị cà phê nguyên bản gặp gỡ không gian ấm áp</p>
+                <a asp-controller="SanPham" asp-action="Index" class="btn btn-explore">
+                    <i class="fas fa-utensils me-2"></i>Khám phá menu
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Giới thiệu về The Coffee Shop -->
+<section class="about-us py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="~/images/about-us.jpg"
+                     alt="About Us" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="mb-4 text-coffee">Câu chuyện của chúng tôi</h2>
+                <p>The Coffee Shop được thành lập năm 2023 với niềm đam mê bất tận với cà phê nguyên chất. Chúng tôi bắt đầu từ một cửa hàng nhỏ và nay đã trở thành điểm đến yêu thích của những người yêu cà phê.</p>
+                <p>Mỗi ly cà phê tại The Coffee Shop là kết quả của quá trình tuyển chọn kỹ lưỡng từ những hạt cà phê tốt nhất, rang xay theo công thức độc quyền.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tại sao chọn chúng tôi -->
+<section class="why-us py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="text-coffee">Tại sao chọn The Coffee Shop?</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="step-number bg-coffee text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-coffee"></i>
+                        </div>
+                        <h5 class="card-title">Nguyên liệu chất lượng</h5>
+                        <p class="card-text text-muted">Hạt cà phê cao cấp từ các vùng trồng nổi tiếng</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="step-number bg-coffee text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-utensils me-2"></i>
+                        </div>
+                        <h5 class="card-title">Thực đơn đa dạng</h5>
+                        <p class="card-text text-muted">Ngoài cà phê còn có đa dạng các món để lựa chọn</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="step-number bg-coffee text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h5 class="card-title">Phục vụ tận tâm</h5>
+                        <p class="card-text text-muted">Trải nghiệm tốt nhất cho từng khách hàng</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="step-number bg-coffee text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h5 class="card-title">Thân thiện môi trường</h5>
+                        <p class="card-text text-muted">Sử dụng vật liệu tái chế và thân thiện</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

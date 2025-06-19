@@ -1,0 +1,152 @@
+﻿/* Tổng thể */
+body {
+    background-color: #f9f6f1;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Navbar */
+.bg-coffee {
+    background-color: #4b2e1e;
+}
+
+.navbar .nav-link {
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+    .navbar .nav-link:hover,
+    .navbar .nav-link.active {
+        color: #ffd7a3;
+        text-decoration: underline;
+    }
+
+.navbar-brand img {
+    border-radius: 6px;
+}
+
+/* Thẻ card */
+.card {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    transition: transform 0.25s ease-in-out;
+}
+
+    /*.card:hover {
+        transform: translateY(-6px);
+    }
+    */
+/* Nút bấm */
+.btn-primary {
+    background-color: #6b4e31;
+    border-color: #6b4e31;
+}
+
+    .btn-primary:hover {
+        background-color: #8b6f47;
+        border-color: #8b6f47;
+    }
+
+.btn-secondary {
+    background-color: #c8a88e;
+    border-color: #c8a88e;
+}
+
+    .btn-secondary:hover {
+        background-color: #a87f60;
+        border-color: #a87f60;
+    }
+
+/* Form input */
+.form-control:focus {
+    border-color: #6b4e31;
+    box-shadow: 0 0 8px rgba(107, 78, 49, 0.5);
+    transition: 0.3s;
+}
+
+/* Footer */
+/* Footer */
+footer {
+    background-color: #4b2e1e;
+    color: #f4e9d8;
+    font-size: 0.9rem;
+    
+}
+
+    footer a {
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        footer a:hover {
+            color: #ffd7a3 !important;
+        }
+
+    footer .social-icons a {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        background-color: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+        footer .social-icons a:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+    footer h5 {
+        color: #ffd7a3;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+        footer h5:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #c8a88e;
+        }
+/* Màu sắc chính */
+.text-coffee {
+    color: #6b4e31;
+}
+
+/* Banner chào mừng */
+.welcome-banner .jumbotron {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Card lý do chọn */
+.why-us .card {
+    transition: all 0.3s ease;
+}
+
+    .why-us .card:hover {
+        transform: translateY(-5px);
+    }
+
+/* Nút đơn giản */
+.btn-explore {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6b4e31; /* Màu coffee */
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+    .btn-explore:hover {
+        background-color: #8b6f47; /* Màu coffee nhạt hơn */
+        color: white;
+    }

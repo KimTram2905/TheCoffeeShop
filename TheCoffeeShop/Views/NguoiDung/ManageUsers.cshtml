@@ -1,0 +1,82 @@
+﻿@model List<TheCoffeeShop.Models.NguoiDung>
+@{
+    ViewData["Title"] = "Quản lý người dùng";
+}
+
+@if (User.IsInRole("Quản lý"))
+{
+    <div class="row justify-content">
+        <div class="col-md-5 col-lg-12">
+            <div class="card p-4">
+                <h2 class="mb-4">
+                    <i class="fas fa-users-cog me-2"></i>Quản lý người dùng
+                </h2>
+                @if (TempData["message"] != null)
+                {
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>@TempData["message"]
+                    </div>
+                }
+                <form method="get" class="mb-4">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-4 mb-3">
+                            <select name="vaiTro" class="form-select">
+                                <option value="">Tất cả vai trò</option>
+                                <option value="Quản lý">Quản lý</option>
+                                <option value="Nhân viên">Nhân viên</option>
+                                <option value="Khách hàng">Khách hàng</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <input type="text" name="search" class="form-control" placeholder="Tìm theo tên, email, số điện thoại, tên đăng nhập" />
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-filter me-2"></i>Lọc
+                            </button>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a asp-action="AddUser" class="btn btn-success w-100">
+                                <i class="fas fa-plus me-2"></i>Thêm
+                            </a>
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tên đăng nhập</th>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Vai trò</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@user.TenDangNhap</td>
+                                <td>@user.HoTen</td>
+                                <td>@user.Email</td>
+                                <td>@user.SoDienThoai</td>
+                                <td>@user.VaiTro</td>
+                                <td>
+                                    <a asp-action="Delete" asp-route-id="@user.MaNguoiDung" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt me-1"></i>Xóa
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-start mt-4">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

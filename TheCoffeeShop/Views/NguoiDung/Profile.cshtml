@@ -1,0 +1,95 @@
+﻿@model TheCoffeeShop.Models.NguoiDung
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-coffee text-white text-center py-3">
+                <h3 class="mb-0"><i class="fas fa-user-circle me-2"></i>Hồ sơ cá nhân</h3>
+            </div>
+
+            <div class="card-body p-4">
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show">
+                        @TempData["Success"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form asp-action="Profile" method="post" enctype="multipart/form-data">
+                        <div class="text-center mb-4">
+                            <img src="@User.FindFirst("Avatar")?.Value" alt="Avatar" class="rounded-circle" width="100" height="100" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="HoTen" class="form-label fw-bold"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input asp-for="HoTen" class="form-control" placeholder="Nhập họ tên" />
+                            </div>
+                            <span asp-validation-for="HoTen" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="SoDienThoai" class="form-label fw-bold"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                <input asp-for="SoDienThoai" class="form-control" placeholder="Nhập số điện thoại" />
+                            </div>
+                            <span asp-validation-for="SoDienThoai" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label fw-bold"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input asp-for="Email" class="form-control" placeholder="Nhập email" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="DiaChi" class="form-label fw-bold"></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                <input asp-for="DiaChi" class="form-control" placeholder="Nhập địa chỉ" />
+                            </div>
+                            <span asp-validation-for="DiaChi" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Ảnh đại diện</label>
+                            <input type="file" name="avatarFile" accept="image/*" class="form-control" />
+                        </div>
+
+                        <div class="d-grid gap-3">
+                            <button type="submit" class="btn btn-primary py-2">
+                                <i class="fas fa-save me-2"></i>Cập nhật hồ sơ
+                            </button>
+                            <a asp-action="Index" asp-controller="Home" class="btn btn-outline-secondary py-2">
+                                <i class="fas fa-home me-2"></i>Về trang chủ
+                            </a>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="alert alert-warning text-center">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Vui lòng đăng nhập để xem hồ sơ
+                        <a asp-action="Login" asp-controller="Account" class="alert-link ms-2">Đăng nhập ngay</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
