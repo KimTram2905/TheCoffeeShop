@@ -1,0 +1,23 @@
+﻿@model TheCoffeeShop.Models.SanPham
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<h2>Thêm sản phẩm mới</h2>
+<form asp-action="Create" method="post">
+    <label>Tên sản phẩm</label>
+    <input asp-for="TenSanPham" /><br />
+
+    <label>Danh mục</label>
+    <select asp-for="MaDanhMuc" asp-items="ViewBag.DanhMucList"></select><br />
+
+    <label>Đơn giá</label>
+    <input asp-for="DonGia" /><br />
+
+    <label>Mô tả</label>
+    <textarea asp-for="MoTa"></textarea><br />
+
+    <label>Hình ảnh (URL)</label>
+    <input asp-for="HinhAnh" /><br />
+
+    <button type="submit">Thêm</button>
+</form>
+

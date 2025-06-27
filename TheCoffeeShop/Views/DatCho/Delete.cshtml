@@ -1,0 +1,7 @@
+﻿@model TheCoffeeShop.Models.DatCho
+<h2>Xóa đặt chỗ</h2>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="MaDatCho" />
+    <p>Bạn có chắc chắn muốn xóa đặt chỗ của @Model.MaNguoiDungNavigation.HoTen không?</p>
+    <button type="submit">Xóa</button>
+</form>

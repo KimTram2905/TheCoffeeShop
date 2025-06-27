@@ -1,0 +1,25 @@
+﻿@model TheCoffeeShop.Models.SanPham
+
+<h2>Xóa sản phẩm</h2>
+<div>
+    <h4>Bạn có chắc muốn xóa sản phẩm này?</h4>
+    <dl>
+        <dt>Tên sản phẩm:</dt>
+        <dd>@Model.TenSanPham</dd>
+
+        <dt>Danh mục:</dt>
+        <dd>@Model.MaDanhMucNavigation?.TenDanhMuc</dd>
+
+        <dt>Đơn giá:</dt>
+        <dd>@Model.DonGia</dd>
+
+        <dt>Mô tả:</dt>
+        <dd>@Model.MoTa</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="MaSanPham" />
+        <button type="submit">Xóa</button>
+        <a asp-action="Index">Hủy</a>
+    </form>
+</div>

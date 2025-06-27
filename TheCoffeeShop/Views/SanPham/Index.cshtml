@@ -1,0 +1,32 @@
+﻿@model List<TheCoffeeShop.Models.SanPham>
+
+<h2>Danh sách sản phẩm</h2>
+<a asp-action="Create">Thêm sản phẩm mới</a>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Danh mục</th>
+            <th>Đơn giá</th>
+            <th>Mô tả</th>
+            <th>Hình ảnh</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenSanPham</td>
+                <td>@item.MaDanhMucNavigation?.TenDanhMuc</td>
+                <td>@item.DonGia</td>
+                <td>@item.MoTa</td>
+                <td><img src="@item.HinhAnh" width="50" /></td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MaSanPham">Sửa</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MaSanPham">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

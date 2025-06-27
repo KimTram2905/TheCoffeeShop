@@ -1,0 +1,15 @@
+﻿@model TheCoffeeShop.Models.Ban
+
+<h2>Thêm bàn mới</h2>
+<form asp-action="Create" method="post">
+    <label>Tên bàn</label>
+    <input asp-for="TenBan" /><br />
+
+    <label>Trạng thái</label>
+    <input asp-for="TrangThai" /><br />
+
+    <label>Sức chứa</label>
+    <input asp-for="SucChua" type="number" /><br />
+
+    <button type="submit">Thêm</button>
+</form>

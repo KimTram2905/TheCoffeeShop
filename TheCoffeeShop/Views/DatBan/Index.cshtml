@@ -1,0 +1,28 @@
+﻿@model List<TheCoffeeShop.Models.Ban>
+
+<h2>Danh sách bàn</h2>
+<a asp-action="Create">Thêm bàn mới</a>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Tên bàn</th>
+            <th>Trạng thái</th>
+            <th>Sức chứa</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenBan</td>
+                <td>@item.TrangThai</td>
+                <td>@item.SucChua</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MaBan">Sửa</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MaBan">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

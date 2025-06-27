@@ -1,0 +1,22 @@
+﻿@model TheCoffeeShop.Models.Ban
+
+<h2>Xóa bàn</h2>
+<div>
+    <h4>Bạn có chắc muốn xóa bàn này?</h4>
+    <dl>
+        <dt>Tên bàn:</dt>
+        <dd>@Model.TenBan</dd>
+
+        <dt>Trạng thái:</dt>
+        <dd>@Model.TrangThai</dd>
+
+        <dt>Sức chứa:</dt>
+        <dd>@Model.SucChua</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="MaBan" />
+        <button type="submit">Xóa</button>
+        <a asp-action="Index">Hủy</a>
+    </form>
+</div>

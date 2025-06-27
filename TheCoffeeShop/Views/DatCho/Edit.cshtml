@@ -1,0 +1,15 @@
+﻿@model TheCoffeeShop.Models.DatCho
+<h2>Sửa đặt chỗ</h2>
+<form asp-action="Edit">
+    <input type="hidden" asp-for="MaDatCho" />
+    <label>Người dùng</label>
+    <select asp-for="MaNguoiDung" asp-items="ViewBag.NguoiDungList"></select><br />
+    <label>Bàn</label>
+    <select asp-for="MaBan" asp-items="ViewBag.BanList"></select><br />
+    <label>Thời gian đặt</label><input asp-for="ThoiGianDat" type="datetime-local" /><br />
+    <label>Thời gian đến</label><input asp-for="ThoiGianDen" type="datetime-local" /><br />
+    <label>Số người</label><input asp-for="SoNguoi" /><br />
+    <label>Ghi chú</label><input asp-for="GhiChu" /><br />
+    <label>Trạng thái</label><input asp-for="TrangThai" /><br />
+    <button type="submit">Cập nhật</button>
+</form>

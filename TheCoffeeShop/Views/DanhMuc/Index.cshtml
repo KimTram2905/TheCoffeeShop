@@ -1,0 +1,33 @@
+﻿@model List<TheCoffeeShop.Models.DanhMuc>
+
+<h2>Danh sách danh mục</h2>
+
+<form method="get" asp-action="Index">
+    <input type="text" name="search" placeholder="Tìm kiếm..." />
+    <button type="submit">Tìm</button>
+</form>
+
+<a asp-action="Create">+ Thêm danh mục</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Tên danh mục</th>
+            <th>Mô tả</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenDanhMuc</td>
+                <td>@item.MoTa</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MaDanhMuc">Sửa</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MaDanhMuc">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
