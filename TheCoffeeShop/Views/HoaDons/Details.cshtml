@@ -1,0 +1,76 @@
+﻿@model TheCoffeeShop.Models.HoaDon
+
+@{
+    ViewData["Title"] = "Chi tiết hóa đơn";
+    var chiTiet = Model.MaDonHangNavigation.ChiTietDonHangs;
+    var tongTien = chiTiet?.Sum(c => c.SoLuong * c.DonGia) ?? 0;
+}
+
+<div class="container py-4">
+    <div class="mb-4">
+        <h2 class="text-primary fw-bold">
+            <i class="fas fa-file-invoice-dollar me-2"></i>Hóa đơn #@Model.MaHoaDon
+        </h2>
+        <p class="text-muted">Thông tin chi tiết về hóa đơn và các sản phẩm trong đơn hàng.</p>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <p><strong>Khách hàng:</strong> @Model.MaDonHangNavigation.MaNguoiDungNavigation?.TenDangNhap</p>
+            <p><strong>Ngày thanh toán:</strong> @Model.NgayThanhToan.ToString("dd/MM/yyyy HH:mm")</p>
+            <p><strong>Phương thức thanh toán:</strong> @Model.PhuongThucThanhToan</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light fw-bold">
+            <i class="fas fa-list-ul me-2"></i>Chi tiết sản phẩm
+        </div>
+        <div class="card-body table-responsive">
+            @if (chiTiet != null && chiTiet.Count > 0)
+            {
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tên món</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ct in chiTiet)
+                        {
+                            <tr>
+                                <td>@ct.TenSanPham</td>
+                                <td><span class="badge bg-secondary">@ct.SoLuong</span></td>
+                                <td class="text-success">@ct.DonGia.ToString("N0")₫</td>
+                                <td>@ct.GhiChu</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-warning">Không có chi tiết đơn hàng.</div>
+            }
+        </div>
+    </div>
+
+    <div class="text-end mb-4">
+        <h5><strong>Tổng tiền: </strong><span class="text-danger">@tongTien.ToString("N0")₫</span></h5>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Quay lại
+        </a>
+        <a asp-action="XuatHoaDonPDF" asp-route-id="@Model.MaHoaDon" class="btn btn-danger">
+            <i class="fas fa-file-pdf me-1"></i> Xuất hóa đơn PDF
+        </a>
+    </div>
+</div>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
