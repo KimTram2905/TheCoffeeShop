@@ -1,0 +1,154 @@
+﻿@model TheCoffeeShop.Models.DonHang
+@{
+    ViewData["Title"] = "Tạo Đơn Hàng";
+    var donTam = ViewBag.GioHang as List<ChiTietDonHang>;
+    var banTrong = ViewBag.Ban as List<Ban>;
+    decimal tongTien = donTam?.Sum(m => m.SoLuong * m.DonGia) ?? 0;
+}
+
+<div class="container py-4">
+    <div class="mb-4">
+        <h2 class="text-coffee fw-bold"><i class="fas fa-receipt me-2"></i>Tạo Đơn Hàng</h2>
+        <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i>Quay lại danh sách món</a>
+    </div>
+
+    <!-- Danh sách sản phẩm trong đơn -->
+    @if (donTam != null && donTam.Any())
+    {
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-coffee text-white">
+                <h5 class="mb-0"><i class="fas fa-list me-1"></i>Chi Tiết Đơn Hàng</h5>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn Giá</th>
+                            <th>Thành Tiền</th>
+                            <th>Ghi Chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mon in donTam)
+                        {
+                            <tr>
+                                <td>@mon.TenSanPham</td>
+                                <td>@mon.SoLuong</td>
+                                <td>@String.Format("{0:N0}", mon.DonGia)₫</td>
+                                <td class="fw-bold text-success">@String.Format("{0:N0}", mon.SoLuong * mon.DonGia)₫</td>
+                                <td>@mon.GhiChu</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="mt-3">
+                    <strong>Tổng tiền:</strong> <span class="text-danger fw-bold">@String.Format("{0:N0}", tongTien) VNĐ</span>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning"><i class="fas fa-exclamation-circle me-1"></i>Chưa có sản phẩm nào trong đơn hàng.</div>
+    }
+
+    <!-- Form tạo đơn -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-coffee text-white">
+            <h5 class="mb-0"><i class="fas fa-pen me-1"></i>Thông Tin Đơn Hàng</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="CreateOrder" method="post">
+                <div class="mb-3">
+                    <label for="PhanLoaiDon" class="form-label">Phân loại đơn</label>
+                    <select class="form-select" id="PhanLoaiDon" name="LoaiDonHang">
+                        <option value="Mang đi">Mang đi</option>
+                        <option value="Tại quán">Tại quán</option>
+                    </select>
+                </div>
+
+                <div class="mb-3" id="MaBanWrapper" style="display:none;">
+                    <label for="MaBan" class="form-label">Chọn bàn</label>
+                    @if (banTrong != null && banTrong.Any())
+                    {
+                        <select class="form-select" id="MaBan" name="MaBan">
+                            <option value="">-- Chọn bàn --</option>
+                            @foreach (var ban in banTrong)
+                            {
+                                <option value="@ban.MaBan">@ban.TenBan</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <div class="text-danger">Không có bàn trống.</div>
+                    }
+                </div>
+
+                <div class="mb-3" id="PhuongThucWrapper">
+                    <label for="PhuongThucThanhToan" class="form-label">Phương thức thanh toán</label>
+                    <select class="form-select" id="PhuongThucThanhToan" name="PhuongThucThanhToan">
+                        <option value="Chưa thanh toán">Chưa thanh toán</option>
+                        <option value="Tiền mặt">Tiền mặt</option>
+                        <option value="Chuyển khoản">Chuyển khoản</option>
+                        <option value="QR Code">QR Code</option>
+                    </select>
+                </div>
+
+                <div class="d-flex gap-3">
+                    <button type="submit" name="btnThanhToan" class="btn btn-success">
+                        <i class="fas fa-check-circle me-1"></i>Thanh toán
+                    </button>
+                    <button type="submit" name="btnChuathanhToan" class="btn btn-warning text-white">
+                        <i class="fas fa-clock me-1"></i>Chưa thanh toán
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="text-danger mt-3">
+        @Html.ValidationSummary()
+    </div>
+</div>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+@section Scripts {
+    <script>
+        const phanLoai = document.getElementById("PhanLoaiDon");
+        const maBanWrapper = document.getElementById("MaBanWrapper");
+        const phuongThucSelect = document.getElementById("PhuongThucThanhToan");
+        const btnThanhToan = document.querySelector("button[name='btnThanhToan']");
+        const btnChuaThanhToan = document.querySelector("button[name='btnChuathanhToan']");
+
+        function toggleBan() {
+            if (phanLoai.value === "Tại quán") {
+                maBanWrapper.style.display = "block";
+                btnChuaThanhToan.disabled = false;
+            } else {
+                maBanWrapper.style.display = "none";
+                btnChuaThanhToan.disabled = true;
+            }
+        }
+
+        phanLoai.addEventListener("change", toggleBan);
+        window.addEventListener("load", toggleBan);
+
+        btnChuaThanhToan.addEventListener("click", function () {
+            phuongThucSelect.value = "Chưa thanh toán";
+            phuongThucSelect.disabled = false;
+        });
+
+        btnThanhToan.addEventListener("click", function () {
+            phuongThucSelect.disabled = false;
+            if (phuongThucSelect.value === "Chưa thanh toán") {
+                phuongThucSelect.value = "Tiền mặt";
+            }
+        });
+    </script>
+}
