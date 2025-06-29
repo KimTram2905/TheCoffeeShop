@@ -1,0 +1,68 @@
+﻿@model TheCoffeeShop.Models.DonHang
+
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+}
+
+<div class="container py-4">
+    <!-- Header -->
+    <div class="mb-4">
+        <h2 class="text-coffee fw-bold">
+            <i class="fas fa-receipt me-2"></i>@ViewData["Title"]
+        </h2>
+    </div>
+
+    <!-- Thông tin đơn hàng -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-coffee text-white">
+            <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Thông Tin Đơn Hàng</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">Thời gian tạo:</dt>
+                <dd class="col-sm-8">@Model.ThoiGianTao.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                <dt class="col-sm-4">Thời gian cập nhật:</dt>
+                <dd class="col-sm-8">@Model.ThoiGianCapNhat.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                <dt class="col-sm-4">Loại đơn hàng:</dt>
+                <dd class="col-sm-8">@Model.LoaiDonHang</dd>
+
+                <dt class="col-sm-4">Trạng thái:</dt>
+                <dd class="col-sm-8">
+                    @if (Model.TrangThai == "Đã thanh toán")
+                    {
+                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>@Model.TrangThai</span>
+                    }
+                    else if (Model.TrangThai == "Chưa thanh toán")
+                    {
+                        <span class="badge bg-warning text-dark"><i class="fas fa-clock me-1"></i>@Model.TrangThai</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger"><i class="fas fa-times-circle me-1"></i>@Model.TrangThai</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-4">Bàn:</dt>
+                <dd class="col-sm-8">@(Model.MaBanNavigation?.TenBan ?? "(Không có bàn)")</dd>
+
+                <dt class="col-sm-4">Khách hàng:</dt>
+                <dd class="col-sm-8">@(Model.MaNguoiDungNavigation?.TenDangNhap ?? "")</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Nút thao tác -->
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.MaDonHang" class="btn btn-warning me-2">
+            <i class="fas fa-edit me-1"></i>Chỉnh sửa
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+        </a>
+    </div>
+</div>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />

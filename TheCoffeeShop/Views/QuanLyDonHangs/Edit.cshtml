@@ -1,0 +1,77 @@
+﻿@model TheCoffeeShop.Models.DonHang
+
+@{
+    ViewData["Title"] = "Chỉnh sửa đơn hàng";
+}
+
+<div class="container py-4">
+    <!-- Tiêu đề -->
+    <div class="mb-4">
+        <h2 class="text-primary fw-bold">
+            <i class="fas fa-edit me-2"></i>@ViewData["Title"]
+        </h2>
+        <p class="text-muted">Cập nhật thông tin chi tiết cho đơn hàng.</p>
+    </div>
+
+    <!-- Form chỉnh sửa -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <input type="hidden" asp-for="MaDonHang" />
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="MaNguoiDung" class="form-label">Khách hàng</label>
+                        @Html.DropDownListFor(model => model.MaNguoiDung, (SelectList)ViewBag.MaNguoiDung, "-- Chọn người dùng --", new { @class = "form-select" })
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="MaBan" class="form-label">Bàn</label>
+                        @Html.DropDownListFor(model => model.MaBan, (SelectList)ViewBag.MaBan, "-- Chọn bàn --", new { @class = "form-select" })
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="ThoiGianTao" class="form-label">Thời gian tạo</label>
+                        <input asp-for="ThoiGianTao" class="form-control" />
+                        <span asp-validation-for="ThoiGianTao" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="ThoiGianCapNhat" class="form-label">Thời gian cập nhật</label>
+                        <input asp-for="ThoiGianCapNhat" class="form-control" />
+                        <span asp-validation-for="ThoiGianCapNhat" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="LoaiDonHang" class="form-label">Loại đơn hàng</label>
+                        <select asp-for="LoaiDonHang" class="form-select" asp-items="ViewBag.LoaiDonHang"></select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="TrangThai" class="form-label">Trạng thái</label>
+                        <select asp-for="TrangThai" class="form-select" asp-items="ViewBag.TrangThai"></select>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-success me-2">
+                        <i class="fas fa-save me-1"></i>Lưu thay đổi
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
