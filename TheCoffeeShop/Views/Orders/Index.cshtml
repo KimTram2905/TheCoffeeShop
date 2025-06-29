@@ -1,0 +1,131 @@
+﻿@model List<TheCoffeeShop.Models.SanPham>
+@{
+    ViewData["Title"] = "Tạo Đơn Hàng";
+    Layout = "_Layout";
+    var donTam = ViewBag.GioHang as List<ChiTietDonHang> ?? new List<ChiTietDonHang>();
+    var danhSach = ViewBag.DanhSachSanPham as List<SanPham> ?? new List<SanPham>();
+}
+
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="text-coffee fw-bold"><i class="fas fa-cart-plus me-2"></i>Tạo Đơn Hàng</h2>
+        </div>
+    </div>
+
+    <!-- Bộ lọc danh mục -->
+    <form asp-action="Index" method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <select name="maDanhMuc" class="form-select" asp-items="ViewBag.DanhMucs">
+                <option value="">-- Tất cả danh mục --</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-filter me-1"></i>Lọc</button>
+        </div>
+    </form>
+
+    <div class="row">
+        <!-- Danh sách sản phẩm -->
+        <div class="col-md-8 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-coffee text-white">
+                    <h5 class="mb-0"><i class="fas fa-list me-1"></i>Danh Sách Sản Phẩm</h5>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Mã</th>
+                                <th>Tên</th>
+                                <th>Danh Mục</th>
+                                <th>Đơn Giá</th>
+                                <th>Hình Ảnh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.MaSanPham</td>
+                                    <td>
+                                        <a href="javascript:void(0);" class="select-product text-decoration-none text-primary"
+                                           data-masanpham="@item.MaSanPham"
+                                           data-ten="@item.TenSanPham"
+                                           data-madanhmuc="@item.MaDanhMuc"
+                                           data-dongia="@item.DonGia">
+                                            <i class="fas fa-plus-circle me-1"></i>@item.TenSanPham
+                                        </a>
+                                    </td>
+                                    <td>@item.MaDanhMucNavigation?.TenDanhMuc</td>
+                                    <td>@String.Format("{0:N0}", item.DonGia)₫</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.HinhAnh))
+                                        {
+                                            <img src="@item.HinhAnh" alt="Ảnh" width="50" height="50" class="rounded" />
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form thêm sản phẩm vào đơn -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-coffee text-white">
+                    <h5 class="mb-0"><i class="fas fa-plus me-1"></i>Thêm Sản Phẩm</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AddToOrder" asp-controller="Orders" method="post">
+                        <div class="mb-3">
+                            <label>Tên sản phẩm</label>
+                            <input type="text" id="TenSanPhamInput" name="TenSanPham" class="form-control" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label>Mã danh mục</label>
+                            <input type="text" id="MaDanhMucInput" name="MaDanhMuc" class="form-control" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label>Đơn giá</label>
+                            <input type="number" id="DonGiaInput" name="DonGia" class="form-control" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label>Số lượng</label>
+                            <input type="number" id="SoLuongInput" name="SoLuong" class="form-control" min="1" value="1" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Ghi chú</label>
+                            <input type="text" id="GhiChuInput" name="GhiChu" class="form-control" />
+                        </div>
+                        <input type="hidden" name="maSanPham" id="MaSanPhamInput" />
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-plus-circle me-1"></i>Thêm vào đơn</button>
+                            <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i>Trở lại</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.select-product').forEach(link => {
+            link.addEventListener('click', function () {
+                document.getElementById('TenSanPhamInput').value = this.getAttribute('data-ten');
+                document.getElementById('MaDanhMucInput').value = this.getAttribute('data-madanhmuc');
+                document.getElementById('DonGiaInput').value = this.getAttribute('data-dongia');
+                document.getElementById('SoLuongInput').value = 1;
+                document.getElementById('MaSanPhamInput').value = this.getAttribute('data-masanpham');
+            });
+        });
+    </script>
+}
