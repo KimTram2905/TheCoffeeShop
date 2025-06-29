@@ -1,0 +1,25 @@
+﻿@model QuanLyQuanCafe.Models.HoaDon
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>HoaDon</h4>
+<hr />
+<form asp-action="Create" method="post">
+    <input type="hidden" asp-for="MaDonHang" />
+    <input type="hidden" asp-for="TongTien" />
+
+    <div class="form-group">
+        <label asp-for="PhuongThucThanhToan"></label>
+        <select asp-for="PhuongThucThanhToan" class="form-control" asp-items="ViewBag.PhuongThucThanhToan"></select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Xác nhận & Lưu hóa đơn</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
