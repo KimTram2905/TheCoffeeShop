@@ -1,1 +1,247 @@
+@model ThongKeViewModel
+@{
+    ViewData["Title"] = "Thống Kê";
+}
 
+<div class="container py-4">
+    <!-- Header -->
+    <div class="mb-4">
+        <h2 class="text-coffee fw-bold"><i class="fas fa-chart-bar me-2"></i>Thống Kê Tổng Quan</h2>
+    </div>
+
+    <!-- Bộ lọc doanh thu và chi tiết đơn hàng theo ngày -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-coffee text-white">
+                    <h5 class="mb-0">Lọc Doanh Thu và Đơn Hàng Theo Thời Gian</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Index" method="get" class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Từ ngày</label>
+                            <input type="date" name="startDate" class="form-control" value="@ViewBag.StartDate?.ToString("yyyy-MM-dd")" required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Đến ngày</label>
+                            <input type="date" name="endDate" class="form-control" value="@ViewBag.EndDate?.ToString("yyyy-MM-dd")" required />
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary">Lọc</button>
+                        </div>
+                    </form>
+                    @if (ViewBag.StartDate != null && ViewBag.EndDate != null)
+                    {
+                        <p class="mt-3 fw-bold text-success">
+                            Doanh thu từ @ViewBag.StartDate.ToString("dd/MM/yyyy") đến @ViewBag.EndDate.ToString("dd/MM/yyyy"):
+                            @String.Format("{0:N0}", Model.TongDoanhThu)₫
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chi tiết đơn hàng trong khoảng thời gian -->
+    @if (ViewBag.ChiTietDonHang != null && ViewBag.ChiTietDonHang.Count > 0)
+    {
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-coffee text-white">
+                        <h5 class="mb-0">Chi Tiết Đơn Hàng (@ViewBag.ChiTietDonHang.Count đơn)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Mã Đơn Hàng</th>
+                                        <th>Ngày Đặt</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Loại Đơn Hàng</th>
+                                        <th>Tổng Tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var donHang in ViewBag.ChiTietDonHang)
+                                    {
+                                        <tr>
+                                            <td>@donHang.MaDonHang</td>
+                                            <td>@donHang.ThoiGianTao.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>
+                                                @if (donHang.TrangThai == "Đã thanh toán")
+                                                {
+                                                    <span class="badge bg-success">@donHang.TrangThai</span>
+                                                }
+                                                else if (donHang.TrangThai == "Chưa thanh toán")
+                                                {
+                                                    <span class="badge bg-warning">@donHang.TrangThai</span>
+                                                }
+                                                else if (donHang.TrangThai == "Hủy")
+                                                {
+                                                    <span class="badge bg-danger">@donHang.TrangThai</span>
+                                                }
+                                            </td>
+                                            <td>@donHang.LoaiDonHang</td>
+                                            <td class="fw-bold text-success">@String.Format("{0:N0}", donHang.HoaDon?.TongTien ?? 0)₫</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (ViewBag.StartDate != null && ViewBag.EndDate != null)
+    {
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="text-muted">Không có đơn hàng nào trong khoảng thời gian từ @ViewBag.StartDate.ToString("dd/MM/yyyy") đến @ViewBag.EndDate.ToString("dd/MM/yyyy").</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Tổng quan -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng Khách Hàng</h5>
+                    <p class="card-text fw-bold text-primary">@Model.TongKhachHang</p>
+                    <a href="/NguoiDung/ManageUsers" class="btn btn-primary btn-sm">Quản lý khách hàng</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng Đơn Hàng</h5>
+                    <p class="card-text fw-bold text-success">@Model.TongDonHang</p>
+                    <a href="/DonHang/Index" class="btn btn-primary btn-sm">Quản lý đơn hàng</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng Sản Phẩm</h5>
+                    <p class="card-text fw-bold text-info">@Model.TongSanPham</p>
+                    <a href="/SanPham/Index" class="btn btn-primary btn-sm">Quản lý sản phẩm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trạng thái đơn hàng -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-coffee text-white">
+                    <h5 class="mb-0">Trạng Thái Đơn Hàng</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2"><span class="fw-bold text-success">Đã thanh toán:</span> @Model.DonHangDaThanhToan</p>
+                    <p class="mb-2"><span class="fw-bold text-warning">Chưa thanh toán:</span> @Model.DonHangChuaThanhToan</p>
+                    <p class="mb-2"><span class="fw-bold text-danger">Đã hủy:</span> @Model.DonHangHuy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Đặt chỗ -->
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-coffee text-white">
+                    <h5 class="mb-0">Đặt Chỗ</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2"><span class="fw-bold text-primary">Hôm nay:</span> @Model.DatChoHomNay</p>
+                    <p class="mb-2"><span class="fw-bold text-success">Đã xác nhận:</span> @Model.DatChoDaXacNhan</p>
+                    <p class="mb-2"><span class="fw-bold text-warning">Chưa xác nhận:</span> @Model.DatChoChuaXacNhan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sản phẩm bán chạy và Doanh thu theo danh mục -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-coffee text-white">
+                    <h5 class="mb-0">Top 5 Sản Phẩm Bán Chạy</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên Sản Phẩm</th>
+                                    <th>Số Lượng</th>
+                                    <th>Doanh Thu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.SanPhamBanChay.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@(i + 1)</td>
+                                        <td>@Model.SanPhamBanChay[i].TenSanPham</td>
+                                        <td><span class="badge bg-secondary">@Model.SanPhamBanChay[i].SoLuongBan</span></td>
+                                        <td class="fw-bold text-success">@String.Format("{0:N0}", Model.SanPhamBanChay[i].DoanhThu)₫</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-coffee text-white">
+                    <h5 class="mb-0">Doanh Thu Theo Danh Mục</h5>
+                </div>
+                <div class="card-body">
+                    @foreach (var item in Model.DoanhThuTheoDanhMuc)
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>@item.TenDanhMuc</span>
+                            <span class="fw-bold text-success">@String.Format("{0:N0}", item.DoanhThu)₫ (Số lượng: @item.SoLuong)</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loại đơn hàng -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-coffee text-white">
+                    <h5 class="mb-0">Loại Đơn Hàng</h5>
+                </div>
+                <div class="card-body">
+                    @foreach (var item in Model.DonHangTheoLoai)
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>@item.LoaiDonHang</span>
+                            <span class="fw-bold">@item.SoLuong đơn (<span class="text-success">@String.Format("{0:N0}", item.DoanhThu)₫</span>)</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome cho biểu tượng -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
