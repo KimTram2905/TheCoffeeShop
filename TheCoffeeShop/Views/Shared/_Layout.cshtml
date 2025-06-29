@@ -50,6 +50,11 @@
                                     </ul>
                                 </li>
                                 }
+                                @if (User.IsInRole("Quản lý")){
+                                       <li class="nav-item">
+                                           <a class="nav-link" asp-controller="ThongKe" asp-action="Index">Thống kê</a>
+                                       </li>
+                                }
                         </ul>
                         <partial name="_LoginPartial" />
                     </div>
