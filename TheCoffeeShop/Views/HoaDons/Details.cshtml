@@ -1,0 +1,38 @@
+﻿@model TheCoffeeShop.Models.HoaDon
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Hóa đơn #@Model.MaHoaDon</h2>
+<p><strong>Khách hàng:</strong> @Model.MaDonHangNavigation.MaNguoiDungNavigation?.TenDangNhap</p>
+<p><strong>Ngày thanh toán:</strong> @Model.NgayThanhToan.ToString("dd/MM/yyyy HH:mm")</p>
+<p><strong>Phương thức:</strong> @Model.PhuongThucThanhToan</p>
+
+<h4>Chi tiết sản phẩm</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên món</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+            <th>Ghi chú</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ct in Model.MaDonHangNavigation.ChiTietDonHangs)
+        {
+            <tr>
+                <td>@ct.TenSanPham</td>
+                <td>@ct.SoLuong</td>
+                <td>@ct.DonGia.ToString("N0")</td>
+                <td>@ct.GhiChu</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p><strong>Tổng tiền:</strong> @Model.MaDonHangNavigation.ChiTietDonHangs.Sum(c => c.SoLuong * c.DonGia).ToString("N0") VNĐ</p>
+<a asp-action="XuatHoaDonPDF" asp-route-id="@Model.MaHoaDon" class="btn btn-sm btn-danger">
+    Xuất hóa đơn PDF
+</a>
