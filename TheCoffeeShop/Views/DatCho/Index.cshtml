@@ -1,21 +1,55 @@
-﻿@model List<TheCoffeeShop.Models.DatCho>
-<h2>Danh sách đặt chỗ</h2>
-<p><a asp-action="Create">Thêm đặt chỗ</a></p>
-<table class="table">
-    <tr><th>Khách</th><th>Thời gian đặt</th><th>Bàn</th><th>Trạng thái</th><th></th></tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.MaNguoiDungNavigation?.HoTen</td>
-            <td>@item.ThoiGianDat.ToString("g")</td>
-            <td>@item.MaBanNavigation?.TenBan</td>
-            <td>@item.TrangThai</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaDatCho">Sửa</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaDatCho">Xóa</a> |
-                <a asp-action="Confirm" asp-route-id="@item.MaDatCho">Xác nhận</a> |
-                <a asp-action="Cancel" asp-route-id="@item.MaDatCho">Hủy</a>
-            </td>
-        </tr>
-    }
-</table>
+@model List<TheCoffeeShop.Models.DatCho>
+@{
+    ViewData["Title"] = "Danh sách đặt chỗ";
+}
+<div class="container mt-5">
+    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
+    <div class="card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <form method="get" asp-action="Index" class="d-flex gap-2 w-50">
+                <input type="text" name="search" class="form-control" placeholder="Tìm kiếm đặt chỗ..." />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search me-2"></i>Tìm</button>
+            </form>
+            <a asp-action="Create" class="btn btn-explore"><i class="fas fa-plus me-2"></i>Thêm đặt chỗ</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Khách</th>
+                        <th>Thời gian đặt</th>
+                        <th>Bàn</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MaNguoiDungNavigation?.HoTen</td>
+                                <td>@item.ThoiGianDat.ToString("g")</td>
+                                <td>@item.MaBanNavigation?.TenBan</td>
+                                <td>@item.TrangThai</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.MaDatCho" class="btn btn-sm btn-primary me-2"><i class="fas fa-edit me-1"></i>Sửa</a>
+                                    <a asp-action="Delete" asp-route-id="@item.MaDatCho" class="btn btn-sm btn-danger me-2"><i class="fas fa-trash-alt me-1"></i>Xóa</a>
+                                    <a asp-action="Confirm" asp-route-id="@item.MaDatCho" class="btn btn-sm btn-success me-2"><i class="fas fa-check me-1"></i>Xác nhận</a>
+                                    <a asp-action="Cancel" asp-route-id="@item.MaDatCho" class="btn btn-sm btn-warning"><i class="fas fa-ban me-1"></i>Hủy</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">Không có đặt chỗ nào.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
