@@ -1,42 +1,49 @@
-@model List<TheCoffeeShop.Models.DanhMuc>
-<div class="container mt-5">
-    <h2 class="text-coffee mb-4">Danh sách danh mục</h2>
-    <div class="card p-4 shadow-sm">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <form method="get" asp-action="Index" class="d-flex gap-2 w-50">
-                <input type="text" name="search" class="form-control" placeholder="Tìm kiếm danh mục..." />
-                <button type="submit" class="btn btn-primary"><i class="fas fa-search me-2"></i>Tìm</button>
-            </form>
-            <a asp-action="Create" class="btn btn-explore"><i class="fas fa-plus me-2"></i>Thêm danh mục</a>
+@model IEnumerable<TheCoffeeShop.Models.DanhMuc>
+@{
+    ViewData["Title"] = "Danh sách danh mục";
+}
+
+<div class="container mt-4">
+    <div class="card shadow rounded-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">@ViewData["Title"]</h4>
+            <a asp-action="Create" class="btn btn-primary">+ Thêm danh mục</a>
         </div>
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered">
-                <thead>
+
+        <div class="card-body">
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["Message"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <form method="get" class="mb-3">
+                <div class="input-group">
+                    <input type="text" name="search" value="@Context.Request.Query["search"]" class="form-control" placeholder="Tìm kiếm theo tên hoặc mô tả" />
+                    <button type="submit" class="btn btn-outline-secondary">Tìm</button>
+                </div>
+            </form>
+
+            <table class="table table-bordered table-striped">
+                <thead class="table-light">
                     <tr>
                         <th>Tên danh mục</th>
                         <th>Mô tả</th>
-                        <th>Hành động</th>
+                        <th style="width: 150px;">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model.Any())
-                    {
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.TenDanhMuc</td>
-                                <td>@item.MoTa</td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.MaDanhMuc" class="btn btn-sm btn-primary me-2"><i class="fas fa-edit me-1"></i>Sửa</a>
-                                    <a asp-action="Delete" asp-route-id="@item.MaDanhMuc" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt me-1"></i>Xóa</a>
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
+                    @foreach (var item in Model)
                     {
                         <tr>
-                            <td colspan="3" class="text-center text-muted">Không có danh mục nào.</td>
+                            <td>@item.TenDanhMuc</td>
+                            <td>@item.MoTa</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.MaDanhMuc" class="btn btn-sm btn-warning">Sửa</a>
+                                <a asp-action="Delete" asp-route-id="@item.MaDanhMuc" class="btn btn-sm btn-danger">Xóa</a>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -44,7 +51,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
