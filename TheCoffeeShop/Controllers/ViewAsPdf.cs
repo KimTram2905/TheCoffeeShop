@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TheCoffeeShop.Models;
 
-namespace QuanLyQuanCafe.Controllers
+namespace TheCoffeeShop.Controllers
 {
     internal class ViewAsPdf : IActionResult
     {
