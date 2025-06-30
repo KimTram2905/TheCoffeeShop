@@ -10,7 +10,7 @@ using TheCoffeeShop.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
-namespace QuanLyQuanCafe.Controllers
+namespace TheCoffeeShop.Controllers
 {
     public class QuanlydonhangsController : Controller
     {
