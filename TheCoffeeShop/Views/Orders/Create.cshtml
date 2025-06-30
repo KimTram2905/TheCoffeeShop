@@ -1,4 +1,4 @@
-﻿@model TheCoffeeShop.Models.DonHang
+@model TheCoffeeShop.Models.DonHang
 @{
     ViewData["Title"] = "Tạo Đơn Hàng";
     var donTam = ViewBag.GioHang as List<ChiTietDonHang>;
@@ -62,6 +62,17 @@
         </div>
         <div class="card-body">
             <form asp-action="CreateOrder" method="post">
+                <div class="mb-3">
+                    <label for="MaNguoiDung" class="form-label">Người dùng (nếu có)</label>
+                    <select class="form-select" id="MaNguoiDung" name="MaNguoiDung">
+                        <option value="">-- Khách vãng lai --</option>
+                        @foreach (var user in ViewBag.NguoiDung as SelectList)
+                        {
+                            <option value="@user.Value">@user.Text</option>
+                        }
+                    </select>
+                </div>
+
                 <div class="mb-3">
                     <label for="PhanLoaiDon" class="form-label">Phân loại đơn</label>
                     <select class="form-select" id="PhanLoaiDon" name="LoaiDonHang">
