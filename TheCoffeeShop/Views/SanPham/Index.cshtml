@@ -1,32 +1,55 @@
-﻿@model List<TheCoffeeShop.Models.SanPham>
-
-<h2>Danh sách sản phẩm</h2>
-<a asp-action="Create">Thêm sản phẩm mới</a>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Tên sản phẩm</th>
-            <th>Danh mục</th>
-            <th>Đơn giá</th>
-            <th>Mô tả</th>
-            <th>Hình ảnh</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.TenSanPham</td>
-                <td>@item.MaDanhMucNavigation?.TenDanhMuc</td>
-                <td>@item.DonGia</td>
-                <td>@item.MoTa</td>
-                <td><img src="@item.HinhAnh" width="50" /></td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.MaSanPham">Sửa</a> |
-                    <a asp-action="Delete" asp-route-id="@item.MaSanPham">Xóa</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@model List<TheCoffeeShop.Models.SanPham>
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+}
+<div class="container mt-5">
+    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
+    <div class="card p-4 shadow-sm">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <form method="get" asp-action="Index" class="d-flex gap-2 w-50">
+                <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search me-2"></i>Tìm</button>
+            </form>
+            <a asp-action="Create" class="btn btn-explore"><i class="fas fa-plus me-2"></i>Thêm sản phẩm</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Danh mục</th>
+                        <th>Đơn giá</th>
+                        <th>Mô tả</th>
+                        <th>Hình ảnh</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.TenSanPham</td>
+                                <td>@item.MaDanhMucNavigation?.TenDanhMuc</td>
+                                <td>@item.DonGia.ToString("N0") VNĐ</td>
+                                <td>@item.MoTa</td>
+                                <td><img src="@item.HinhAnh" alt="@item.TenSanPham" class="img-thumbnail" style="max-width: 100px;" /></td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.MaSanPham" class="btn btn-sm btn-primary me-2"><i class="fas fa-edit me-1"></i>Sửa</a>
+                                    <a asp-action="Delete" asp-route-id="@item.MaSanPham" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt me-1"></i>Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Không có sản phẩm nào.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
