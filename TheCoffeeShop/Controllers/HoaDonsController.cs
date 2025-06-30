@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using QuanLyQuanCafe.Models;
 using Rotativa.AspNetCore;
 
-namespace QuanLyQuanCafe.Controllers
+namespace TheCoffeeShop.Controllers
 {
     public class HoaDonsController : Controller
     {
