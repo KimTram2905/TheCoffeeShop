@@ -1,4 +1,4 @@
-﻿@model List<TheCoffeeShop.Models.SanPham>
+@model List<TheCoffeeShop.Models.SanPham>
 @{
     ViewData["Title"] = "Tạo Đơn Hàng";
     Layout = "_Layout";
@@ -128,4 +128,15 @@
             });
         });
     </script>
+}
+@if (ViewBag.NguoiDung is SelectList nguoiDungList)
+{
+    foreach (var user in nguoiDungList)
+    {
+        <option value="@user.Value">@user.Text</option>
+    }
+}
+else
+{
+    <option value="">Không có người dùng</option>
 }
