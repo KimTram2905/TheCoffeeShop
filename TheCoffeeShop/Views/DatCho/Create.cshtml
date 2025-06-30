@@ -1,13 +1,54 @@
-﻿@model TheCoffeeShop.Models.DatCho
-<h2>Thêm đặt chỗ</h2>
-<form asp-action="Create">
-    <label>Người dùng</label>
-    <select asp-for="MaNguoiDung" asp-items="ViewBag.NguoiDungList"></select><br />
-    <label>Bàn</label>
-    <select asp-for="MaBan" asp-items="ViewBag.BanList"></select><br />
-    <label>Thời gian đặt</label><input asp-for="ThoiGianDat" type="datetime-local" /><br />
-    <label>Thời gian đến</label><input asp-for="ThoiGianDen" type="datetime-local" /><br />
-    <label>Số người</label><input asp-for="SoNguoi" /><br />
-    <label>Ghi chú</label><input asp-for="GhiChu" /><br />
-    <button type="submit">Đặt</button>
-</form>
+@model TheCoffeeShop.Models.DatCho
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "Thêm đặt chỗ";
+}
+<div class="container mt-5">
+    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
+    <div class="card p-4">
+        <form asp-action="Create" method="post">
+            <div class="form-group mb-3">
+                <label asp-for="MaNguoiDung" class="form-label fw-bold text-coffee"></label>
+                <select asp-for="MaNguoiDung" asp-items="ViewBag.NguoiDungList" class="form-select">
+                    <option value="">-- Chọn người dùng --</option>
+                </select>
+                <span asp-validation-for="MaNguoiDung" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="MaBan" class="form-label fw-bold text-coffee"></label>
+                <select asp-for="MaBan" asp-items="ViewBag.BanList" class="form-select">
+                    <option value="">-- Chọn bàn --</option>
+                </select>
+                <span asp-validation-for="MaBan" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ThoiGianDat" class="form-label fw-bold text-coffee"></label>
+                <input asp-for="ThoiGianDat" class="form-control" type="datetime-local" />
+                <span asp-validation-for="ThoiGianDat" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ThoiGianDen" class="form-label fw-bold text-coffee"></label>
+                <input asp-for="ThoiGianDen" class="form-control" type="datetime-local" />
+                <span asp-validation-for="ThoiGianDen" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="SoNguoi" class="form-label fw-bold text-coffee"></label>
+                <input asp-for="SoNguoi" class="form-control" type="number" min="1" placeholder="Nhập số người (VD: 4)" />
+                <span asp-validation-for="SoNguoi" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="GhiChu" class="form-label fw-bold text-coffee"></label>
+                <textarea asp-for="GhiChu" class="form-control" rows="4" placeholder="Nhập ghi chú (VD: Gần cửa sổ)"></textarea>
+                <span asp-validation-for="GhiChu" class="text-danger"></span>
+            </div>
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary w-100"><i class="fas fa-plus me-2"></i>Đặt chỗ</button>
+                <a asp-action="Index" class="btn btn-secondary w-100">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
