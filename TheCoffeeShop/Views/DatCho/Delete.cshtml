@@ -1,7 +1,35 @@
-﻿@model TheCoffeeShop.Models.DatCho
-<h2>Xóa đặt chỗ</h2>
-<form asp-action="Delete">
-    <input type="hidden" asp-for="MaDatCho" />
-    <p>Bạn có chắc chắn muốn xóa đặt chỗ của @Model.MaNguoiDungNavigation.HoTen không?</p>
-    <button type="submit">Xóa</button>
-</form>
+@model TheCoffeeShop.Models.DatCho
+@{
+    ViewData["Title"] = "Xóa đặt chỗ";
+}
+<div class="container mt-5">
+    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
+    <div class="card p-4">
+        <h4 class="mb-3 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Bạn có chắc chắn muốn xóa đặt chỗ này?</h4>
+        <div class="mb-4 p-3 bg-light rounded">
+            <dl class="row">
+                <dt class="col-sm-3 fw-bold text-coffee">Khách:</dt>
+                <dd class="col-sm-9">@Model.MaNguoiDungNavigation?.HoTen</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Bàn:</dt>
+                <dd class="col-sm-9">@Model.MaBanNavigation?.TenBan</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Thời gian đặt:</dt>
+                <dd class="col-sm-9">@Model.ThoiGianDat.ToString("g")</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Thời gian đến:</dt>
+                <dd class="col-sm-9">@Model.ThoiGianDen.ToString("g")</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Số người:</dt>
+                <dd class="col-sm-9">@Model.SoNguoi</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Ghi chú:</dt>
+                <dd class="col-sm-9">@Model.GhiChu</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Trạng thái:</dt>
+                <dd class="col-sm-9">@Model.TrangThai</dd>
+            </dl>
+        </div>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="MaDatCho" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger w-100"><i class="fas fa-trash-alt me-2"></i>Xóa</button>
+                <a asp-action="Index" class="btn btn-secondary w-100">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
