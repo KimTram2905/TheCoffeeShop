@@ -1,22 +1,27 @@
-﻿@model TheCoffeeShop.Models.Ban
-
-<h2>Xóa bàn</h2>
-<div>
-    <h4>Bạn có chắc muốn xóa bàn này?</h4>
-    <dl>
-        <dt>Tên bàn:</dt>
-        <dd>@Model.TenBan</dd>
-
-        <dt>Trạng thái:</dt>
-        <dd>@Model.TrangThai</dd>
-
-        <dt>Sức chứa:</dt>
-        <dd>@Model.SucChua</dd>
-    </dl>
-
-    <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="MaBan" />
-        <button type="submit">Xóa</button>
-        <a asp-action="Index">Hủy</a>
-    </form>
+@model TheCoffeeShop.Models.Ban
+@{
+    ViewData["Title"] = "Xóa bàn";
+}
+<div class="container mt-5">
+    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
+    <div class="card p-4 shadow-sm">
+        <h4 class="mb-3 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Bạn có chắc chắn muốn xóa bàn này?</h4>
+        <div class="mb-4 p-3 bg-light rounded">
+            <dl class="row">
+                <dt class="col-sm-3 fw-bold text-coffee">Tên bàn:</dt>
+                <dd class="col-sm-9">@Model.TenBan</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Trạng thái:</dt>
+                <dd class="col-sm-9">@Model.TrangThai</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Sức chứa:</dt>
+                <dd class="col-sm-9">@Model.SucChua người</dd>
+            </dl>
+        </div>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="MaBan" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger w-100"><i class="fas fa-trash-alt me-2"></i>Xóa</button>
+                <a asp-action="Index" class="btn btn-secondary w-100">Hủy</a>
+            </div>
+        </form>
+    </div>
 </div>
