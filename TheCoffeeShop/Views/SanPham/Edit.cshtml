@@ -1,24 +1,48 @@
-﻿@model TheCoffeeShop.Models.SanPham
+@model TheCoffeeShop.Models.SanPham
 @using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "Chỉnh sửa sản phẩm";
+}
+<div class="container mt-5">
+    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
+    <div class="card p-4 shadow-sm">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="MaSanPham" />
+            <div class="form-group mb-3">
+                <label asp-for="TenSanPham" class="form-label fw-bold text-coffee"></label>
+                <input asp-for="TenSanPham" class="form-control" placeholder="Nhập tên sản phẩm (VD: Cà phê sữa đá)" />
+                <span asp-validation-for="TenSanPham" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="MaDanhMuc" class="form-label fw-bold text-coffee"></label>
+                <select asp-for="MaDanhMuc" asp-items="ViewBag.DanhMucList" class="form-select">
+                    <option value="">-- Chọn danh mục --</option>
+                </select>
+                <span asp-validation-for="MaDanhMuc" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DonGia" class="form-label fw-bold text-coffee"></label>
+                <input asp-for="DonGia" class="form-control" type="number" step="0.01" placeholder="Nhập đơn giá (VD: 30000)" />
+                <span asp-validation-for="DonGia" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="MoTa" class="form-label fw-bold text-coffee"></label>
+                <textarea asp-for="MoTa" class="form-control" rows="5" placeholder="Nhập mô tả sản phẩm (VD: Cà phê sữa đá thơm ngon, đậm vị)"></textarea>
+                <span asp-validation-for="MoTa" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="HinhAnh" class="form-label fw-bold text-coffee"></label>
+                <input asp-for="HinhAnh" class="form-control" placeholder="Nhập URL hình ảnh (VD: https://example.com/image.jpg)" />
+                <span asp-validation-for="HinhAnh" class="text-danger"></span>
+            </div>
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary w-100"><i class="fas fa-save me-2"></i>Lưu</button>
+                <a asp-action="Index" class="btn btn-secondary w-100">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
 
-<h2>Chỉnh sửa sản phẩm</h2>
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="MaSanPham" />
-
-    <label>Tên sản phẩm</label>
-    <input asp-for="TenSanPham" /><br />
-
-    <label>Danh mục</label>
-    <select asp-for="MaDanhMuc" asp-items="ViewBag.DanhMucList"></select><br />
-
-    <label>Đơn giá</label>
-    <input asp-for="DonGia" /><br />
-
-    <label>Mô tả</label>
-    <textarea asp-for="MoTa"></textarea><br />
-
-    <label>Hình ảnh (URL)</label>
-    <input asp-for="HinhAnh" /><br />
-
-    <button type="submit">Lưu</button>
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
