@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,8 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuanLyQuanCafe.Models;
 using System.Security.Claims;
+using TheCoffeeShop.Models;
 
-namespace TheCoffeeShop.Controllers
+namespace QuanLyQuanCafe.Controllers
 {
     public class OrdersController : Controller
     {
@@ -104,6 +105,7 @@ namespace TheCoffeeShop.Controllers
 
             ViewBag.Ban = _context.Bans.Where(b => b.TrangThai == "Trống").ToList();
             ViewBag.GioHang = HttpContext.Session.GetObject<List<ChiTietDonHang>>("GioHang") ?? new List<ChiTietDonHang>();
+            ViewBag.NguoiDung = new SelectList(_context.NguoiDungs, "MaNguoiDung", "HoTen");
             return View();
         }
 
@@ -206,7 +208,7 @@ namespace TheCoffeeShop.Controllers
         [HttpPost]
         public IActionResult AddToOrder(int maSanPham, int soLuong, string? ghiChu)
         {
-            var product = _context.SanPhams.FirstOrDefault(p => p.MaSanPham == maSanPham);
+            var product = _context.SanPhams.FirstOrDefault(p => p.MaSanPham == maSanPham);//Tìm sản phẩm trong database theo mã sản phẩm (maSanPham).
             if (product == null) return NotFound();
 
             var cart = HttpContext.Session.GetObject<List<ChiTietDonHang>>("GioHang") ?? new List<ChiTietDonHang>();
@@ -238,7 +240,7 @@ namespace TheCoffeeShop.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrder([Bind("LoaiDonHang,TrangThai,MaBan")] DonHang donHang, string PhuongThucThanhToan)
+        public async Task<IActionResult> CreateOrder([Bind("LoaiDonHang,TrangThai,MaBan")] DonHang donHang, string PhuongThucThanhToan, int? MaNguoiDung)
         {
             var gioHang = HttpContext.Session.GetObject<List<ChiTietDonHang>>("GioHang") ?? new List<ChiTietDonHang>();
             foreach (var item in gioHang)
@@ -258,6 +260,7 @@ namespace TheCoffeeShop.Controllers
                 ModelState.AddModelError("", "Không có sản phẩm trong đơn hàng.");
                 ViewBag.Ban = _context.Bans.Where(b => b.TrangThai == "Trống").ToList();
                 ViewBag.GioHang = gioHang;
+                ViewBag.NguoiDung = new SelectList(_context.NguoiDungs.ToList(), "MaNguoiDung", "HoTen");//
                 return View("Create", donHang);
             }
 
@@ -265,11 +268,17 @@ namespace TheCoffeeShop.Controllers
             donHang.ThoiGianCapNhat = DateTime.Now;
             donHang.TrangThai = Request.Form.ContainsKey("btnThanhToan") ? "Đã thanh toán" : "Chưa thanh toán";
 
-            if (User.Identity.IsAuthenticated)
+            if (MaNguoiDung.HasValue)
+            {
+                donHang.MaNguoiDung = MaNguoiDung.Value; // chọn từ dropdown
+            }
+            else if (User.Identity.IsAuthenticated)
             {
                 var userIdStr = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 if (int.TryParse(userIdStr, out int userId))
-                    donHang.MaNguoiDung = userId;
+                {
+                    donHang.MaNguoiDung = null; // lấy người dùng hiện tại
+                }
             }
 
             donHang.ChiTietDonHangs = gioHang;
@@ -294,8 +303,7 @@ namespace TheCoffeeShop.Controllers
                 // Đơn chưa thanh toán → lưu mã đơn vào session để chỉnh sau
                 HttpContext.Session.SetInt32("DonHangTam", donHang.MaDonHang);
             }
-
-            return RedirectToAction("Index", "Quanlydonhangs");
+            return RedirectToAction("Index", "QuanLyDonHangs");
         }
     }
 }
