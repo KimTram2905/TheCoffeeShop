@@ -1,25 +1,31 @@
-﻿@model TheCoffeeShop.Models.SanPham
-
-<h2>Xóa sản phẩm</h2>
-<div>
-    <h4>Bạn có chắc muốn xóa sản phẩm này?</h4>
-    <dl>
-        <dt>Tên sản phẩm:</dt>
-        <dd>@Model.TenSanPham</dd>
-
-        <dt>Danh mục:</dt>
-        <dd>@Model.MaDanhMucNavigation?.TenDanhMuc</dd>
-
-        <dt>Đơn giá:</dt>
-        <dd>@Model.DonGia</dd>
-
-        <dt>Mô tả:</dt>
-        <dd>@Model.MoTa</dd>
-    </dl>
-
-    <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="MaSanPham" />
-        <button type="submit">Xóa</button>
-        <a asp-action="Index">Hủy</a>
-    </form>
+@model TheCoffeeShop.Models.SanPham
+@{
+    ViewData["Title"] = "Xóa sản phẩm";
+}
+<div class="container mt-5">
+    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
+    <div class="card p-4 shadow-sm">
+        <h4 class="mb-3 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Bạn có chắc chắn muốn xóa sản phẩm này?</h4>
+        <div class="mb-4 p-3 bg-light rounded">
+            <dl class="row">
+                <dt class="col-sm-3 fw-bold text-coffee">Tên sản phẩm:</dt>
+                <dd class="col-sm-9">@Model.TenSanPham</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Danh mục:</dt>
+                <dd class="col-sm-9">@Model.MaDanhMucNavigation?.TenDanhMuc</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Đơn giá:</dt>
+                <dd class="col-sm-9">@Model.DonGia.ToString("N0") VNĐ</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Mô tả:</dt>
+                <dd class="col-sm-9">@Model.MoTa</dd>
+                <dt class="col-sm-3 fw-bold text-coffee">Hình ảnh:</dt>
+                <dd class="col-sm-9"><img src="@Model.HinhAnh" alt="@Model.TenSanPham" class="img-thumbnail" style="max-width: 100px;" /></dd>
+            </dl>
+        </div>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="MaSanPham" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger w-100"><i class="fas fa-trash-alt me-2"></i>Xóa</button>
+                <a asp-action="Index" class="btn btn-secondary w-100">Hủy</a>
+            </div>
+        </form>
+    </div>
 </div>
