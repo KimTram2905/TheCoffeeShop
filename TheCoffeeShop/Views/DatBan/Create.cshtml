@@ -1,15 +1,39 @@
-﻿@model TheCoffeeShop.Models.Ban
+@model TheCoffeeShop.Models.Ban
+@{
+    ViewData["Title"] = "Thêm bàn mới";
+}
+<div class="container mt-5">
+    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
+    <div class="card p-4 shadow-sm">
+        <form asp-action="Create" method="post">
+            <div class="form-group mb-3">
+                <label asp-for="TenBan" class="form-label fw-bold text-coffee"></label>
+                <input asp-for="TenBan" class="form-control" placeholder="Nhập tên bàn (VD: Bàn 01)" />
+                <span asp-validation-for="TenBan" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="TrangThai" class="form-label fw-bold text-coffee"></label>
+                <select asp-for="TrangThai" class="form-select">
+                    <option value="">-- Chọn trạng thái --</option>
+                    <option value="Trống">Trống</option>
+                    <option value="Đã đặt">Đã đặt</option>
+                    <option value="Bảo trì">Bảo trì</option>
+                </select>
+                <span asp-validation-for="TrangThai" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="SucChua" class="form-label fw-bold text-coffee"></label>
+                <input asp-for="SucChua" class="form-control" type="number" min="1" placeholder="Nhập sức chứa (VD: 4)" />
+                <span asp-validation-for="SucChua" class="text-danger"></span>
+            </div>
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary w-100"><i class="fas fa-plus me-2"></i>Thêm bàn</button>
+                <a asp-action="Index" class="btn btn-secondary w-100">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
 
-<h2>Thêm bàn mới</h2>
-<form asp-action="Create" method="post">
-    <label>Tên bàn</label>
-    <input asp-for="TenBan" /><br />
-
-    <label>Trạng thái</label>
-    <input asp-for="TrangThai" /><br />
-
-    <label>Sức chứa</label>
-    <input asp-for="SucChua" type="number" /><br />
-
-    <button type="submit">Thêm</button>
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
