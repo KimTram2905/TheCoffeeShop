@@ -1,33 +1,50 @@
-﻿@model List<TheCoffeeShop.Models.DanhMuc>
+@model List<TheCoffeeShop.Models.DanhMuc>
+<div class="container mt-5">
+    <h2 class="text-coffee mb-4">Danh sách danh mục</h2>
+    <div class="card p-4 shadow-sm">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <form method="get" asp-action="Index" class="d-flex gap-2 w-50">
+                <input type="text" name="search" class="form-control" placeholder="Tìm kiếm danh mục..." />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search me-2"></i>Tìm</button>
+            </form>
+            <a asp-action="Create" class="btn btn-explore"><i class="fas fa-plus me-2"></i>Thêm danh mục</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tên danh mục</th>
+                        <th>Mô tả</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.TenDanhMuc</td>
+                                <td>@item.MoTa</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.MaDanhMuc" class="btn btn-sm btn-primary me-2"><i class="fas fa-edit me-1"></i>Sửa</a>
+                                    <a asp-action="Delete" asp-route-id="@item.MaDanhMuc" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt me-1"></i>Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Không có danh mục nào.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-<h2>Danh sách danh mục</h2>
-
-<form method="get" asp-action="Index">
-    <input type="text" name="search" placeholder="Tìm kiếm..." />
-    <button type="submit">Tìm</button>
-</form>
-
-<a asp-action="Create">+ Thêm danh mục</a>
-
-<table>
-    <thead>
-        <tr>
-            <th>Tên danh mục</th>
-            <th>Mô tả</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.TenDanhMuc</td>
-                <td>@item.MoTa</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.MaDanhMuc">Sửa</a> |
-                    <a asp-action="Delete" asp-route-id="@item.MaDanhMuc">Xóa</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
