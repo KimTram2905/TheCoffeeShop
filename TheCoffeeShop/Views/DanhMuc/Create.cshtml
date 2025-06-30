@@ -1,29 +1,34 @@
 @model TheCoffeeShop.Models.DanhMuc
 @{
-    ViewData["Title"] = "Thêm danh mục mới";
+    ViewData["Title"] = "Thêm danh mục";
 }
-<div class="container mt-5">
-    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
-    <div class="card p-4 shadow-sm">
-        <form asp-action="Create" method="post">
-            <div class="form-group mb-3">
-                <label asp-for="TenDanhMuc" class="form-label fw-bold text-coffee"></label>
-                <input asp-for="TenDanhMuc" class="form-control" placeholder="Nhập tên danh mục (VD: Cà phê sữa, Trà)" />
-                <span asp-validation-for="TenDanhMuc" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="MoTa" class="form-label fw-bold text-coffee"></label>
-                <textarea asp-for="MoTa" class="form-control" rows="5" placeholder="Nhập mô tả danh mục (VD: Các loại đồ uống có sữa)"></textarea>
-                <span asp-validation-for="MoTa" class="text-danger"></span>
-            </div>
-            <div class="d-flex gap-2 mt-4">
-                <button type="submit" class="btn btn-primary w-100">Thêm danh mục</button>
-                <a asp-action="Index" class="btn btn-secondary w-100">Hủy</a>
-            </div>
-        </form>
+
+<div class="container mt-4">
+    <div class="card shadow rounded-3">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">@ViewData["Title"]</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div class="mb-3">
+                    <label asp-for="TenDanhMuc" class="form-label"></label>
+                    <input asp-for="TenDanhMuc" class="form-control" />
+                    <span asp-validation-for="TenDanhMuc" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MoTa" class="form-label"></label>
+                    <textarea asp-for="MoTa" class="form-control"></textarea>
+                    <span asp-validation-for="MoTa" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-success">Lưu</button>
+                <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+            </form>
+        </div>
     </div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
