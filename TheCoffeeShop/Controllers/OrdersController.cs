@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using QuanLyQuanCafe.Models;
 using System.Security.Claims;
 
-namespace QuanLyQuanCafe.Controllers
+namespace TheCoffeeShop.Controllers
 {
     public class OrdersController : Controller
     {
