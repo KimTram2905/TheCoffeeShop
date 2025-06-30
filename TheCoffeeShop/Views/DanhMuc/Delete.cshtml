@@ -2,20 +2,30 @@
 @{
     ViewData["Title"] = "Xóa danh mục";
 }
-<div class="container mt-5">
-    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
-    <div class="card p-4 shadow-sm">
-        <h4 class="mb-3 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Bạn có chắc chắn muốn xóa danh mục sau?</h4>
-        <div class="mb-4 p-3 bg-light rounded">
-            <strong>Tên danh mục:</strong> @Model.TenDanhMuc <br />
-            <strong>Mô tả:</strong> @Model.MoTa
+
+<div class="container mt-4">
+    <div class="card shadow rounded-3 border-danger">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">@ViewData["Title"]</h4>
         </div>
-        <form asp-action="DeleteConfirmed" method="post">
-            <input type="hidden" asp-for="MaDanhMuc" />
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-danger w-100"><i class="fas fa-trash-alt me-2"></i>Xóa</button>
-                <a asp-action="Index" class="btn btn-secondary w-100">Hủy</a>
-            </div>
-        </form>
+        <div class="card-body">
+            <p class="text-danger fw-bold">Bạn có chắc chắn muốn xóa danh mục sau?</p>
+
+            <dl class="row">
+                <dt class="col-sm-3">Tên danh mục</dt>
+                <dd class="col-sm-9">@Model.TenDanhMuc</dd>
+
+                <dt class="col-sm-3">Mô tả</dt>
+                <dd class="col-sm-9">@Model.MoTa</dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="MaDanhMuc" />
+                <div class="d-flex justify-content-start mt-4">
+                    <button type="submit" class="btn btn-danger me-2">Xóa</button>
+                    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
