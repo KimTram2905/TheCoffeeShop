@@ -1,17 +1,21 @@
-﻿@model TheCoffeeShop.Models.DanhMuc
+@model TheCoffeeShop.Models.DanhMuc
 @{
     ViewData["Title"] = "Xóa danh mục";
 }
-<h2>@ViewData["Title"]</h2>
-
-<h4>Bạn có chắc chắn muốn xóa danh mục sau?</h4>
-<div>
-    <strong>Tên danh mục:</strong> @Model.TenDanhMuc <br />
-    <strong>Mô tả:</strong> @Model.MoTa
+<div class="container mt-5">
+    <h2 class="text-coffee mb-4">@ViewData["Title"]</h2>
+    <div class="card p-4 shadow-sm">
+        <h4 class="mb-3 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Bạn có chắc chắn muốn xóa danh mục sau?</h4>
+        <div class="mb-4 p-3 bg-light rounded">
+            <strong>Tên danh mục:</strong> @Model.TenDanhMuc <br />
+            <strong>Mô tả:</strong> @Model.MoTa
+        </div>
+        <form asp-action="DeleteConfirmed" method="post">
+            <input type="hidden" asp-for="MaDanhMuc" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger w-100"><i class="fas fa-trash-alt me-2"></i>Xóa</button>
+                <a asp-action="Index" class="btn btn-secondary w-100">Hủy</a>
+            </div>
+        </form>
+    </div>
 </div>
-
-<form asp-action="DeleteConfirmed" method="post">
-    <input type="hidden" asp-for="MaDanhMuc" />
-    <button type="submit" class="btn btn-danger">Xóa</button>
-    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
-</form>
