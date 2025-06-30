@@ -27,46 +27,39 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Home" asp-action="Index">Trang chủ</a>
                             </li>
+
                             @if (User.IsInRole("Quản lý") || User.IsInRole("Nhân viên"))
                             {
-                                <li>
+                                <li class="nav-item">
                                     <a class="nav-link" asp-controller="Orders" asp-action="Index">Order</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-controller="QuanLyDonHangs" asp-action="Index">Quản lý đơn hàng</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link" asp-controller="HoaDons" asp-action="Index">Hóa đơn</a>
-                                </li>
-                                @* Dropdown: Quản lý danh mục và sản phẩm *@
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                        Quản lý danh mục và sản phẩm
+                                        Quản lý
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="DanhMuc" asp-action="Index">Quản lý danh mục</a></li>
-                                        <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Index">Quản lý sản phẩm</a></li>
-                                    </ul>
-                                </li>
-                                @* Dropdown: Quản lý bàn và đặt chỗ  *@
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                        Quản lý bàn và đặt chỗ
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="DatBan" asp-action="Index">Quản lý bàn</a></li>
+                                        <li><a class="dropdown-item" asp-controller="QuanLyDonHangs" asp-action="Index">Quản lý đơn hàng</a></li>
+                                        <li><a class="dropdown-item" asp-controller="HoaDons" asp-action="Index">Hóa đơn</a></li>
                                         <li><a class="dropdown-item" asp-controller="DatCho" asp-action="Index">Quản lý đặt chỗ</a></li>
+                                        @if (User.IsInRole("Quản lý"))
+                                        {
+                                            <li><a class="dropdown-item" asp-controller="DatBan" asp-action="Index">Quản lý bàn</a></li>
+                                            <li><a class="dropdown-item" asp-controller="DanhMuc" asp-action="Index">Quản lý danh mục</a></li>
+                                            <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Index">Quản lý sản phẩm</a></li>
+                                        }
                                     </ul>
                                 </li>
-                                @if (User.IsInRole("Quản lý"))
-                                {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="ThongKe" asp-action="Index">Thống kê</a>
+                                </li>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-controller="ThongKe" asp-action="Index">Thống kê</a>
-                                    </li>
-
-                                }
-
+                            }
+                            @if (User.IsInRole("Khách hàng"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="DatCho" asp-action="Create">Đặt chỗ</a>
+                                </li>
                             }
                         </ul>
                         <partial name="_LoginPartial" />
@@ -89,7 +82,7 @@
                     <ul class="list-unstyled">
                         <li class="mb-3">
                             <i class="fas fa-map-marker-alt me-2"></i>
-                            170 An Dương Vương,Quy Nhơn
+                            170 An Dương Vương, Quy Nhơn
                         </li>
                         <li class="mb-3">
                             <i class="fas fa-phone-alt me-2"></i>
